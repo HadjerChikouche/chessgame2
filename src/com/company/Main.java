@@ -1,11 +1,13 @@
 package com.company;
 
+import java.util.Scanner;
+
 public class Main {
 
     public static void main(String[] args) {
 
         PieceSquare[] board = initiliseBoard();
-        displayBoard(board);
+        moove();
     }
 
 
@@ -96,6 +98,35 @@ public class Main {
             }else{
                 System.out.print(" " + pieceSquare.getPiece() + " ");
             }
+        }
+    }
+
+    private static void moove(){
+        Scanner in = new Scanner(System.in);
+        PieceSquare[] board = initiliseBoard();
+
+        while (true) {
+
+            System.out.println();
+            System.out.println(" Please Enter the position of the piece that you want to play : ");
+            String from = in.nextLine();
+            System.out.println("Please enter the position you want it to be in ");
+            String to = in.nextLine();
+
+            String piece = null;
+            for (int i = 0; i < 64; i++) {
+                if (board[i].getSquare().equals(from)) {
+                    piece = board[i].getPiece();
+                    board[i].setPiece(null);
+                }
+            }
+
+            for (int i = 0; i < 64; i++) {
+                if (board[i].getSquare().equals(to)) {
+                    board[i].setPiece(piece);
+                }
+            }
+            displayBoard(board);
         }
     }
 }
