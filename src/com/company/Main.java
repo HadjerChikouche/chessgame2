@@ -85,9 +85,19 @@ public class Main {
 
     private static void displayBoard(PieceSquare[] board) {
 
+        System.out.print("   a "+"  b "+"  c "+"  d "+"  e "+"  f "+"  g "+"  h ");
+
+        int k = 0;
         for (int i=0 ; i < 64; i++) {
+
+            k=+k;
             if (i%8 == 0) {
                 System.out.println();
+                k++;
+
+                System.out.print(k+" ");
+
+
             }
             PieceSquare pieceSquare = board[i];
 
