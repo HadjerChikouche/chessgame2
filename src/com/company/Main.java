@@ -120,8 +120,9 @@ public class Main {
             String to = in.nextLine();
 
             moteurDeRegles = new MoteurDeRegles();
-            String piece = getPieceByPosition(from, board);
-            if (moteurDeRegles.pawnRules(from, to, piece) == false){
+            String pieceFrom = getPieceByPosition(from, board);
+            String pieceTo = getPieceByPosition(to, board);
+            if (moteurDeRegles.pawnRules(from, to, pieceFrom, pieceTo) == false){
                 System.out.println("this move is not possible try something else");
                 displayBoard(board);
             }else{
@@ -146,9 +147,9 @@ public class Main {
         }
     }
 
-    private static String getPieceByPosition(String from, PieceSquare[] board) {
+    private static String getPieceByPosition(String position, PieceSquare[] board) {
         for (PieceSquare pieceSquare : board) {
-            if(from.equals(pieceSquare.getSquare())){
+            if(position.equals(pieceSquare.getSquare())){
                 return pieceSquare.getPiece();
             }
         }

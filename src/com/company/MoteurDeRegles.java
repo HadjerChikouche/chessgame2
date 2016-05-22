@@ -12,10 +12,22 @@ public class MoteurDeRegles {
 // If it's its first move ,he has the option to move two squares
 // if a square in front of him is occupied ,it can't move
 //can't capture it nor move over it *//
-    public boolean pawnRules(String from,String to,String piece){
-        if (piece.substring(1).equals("P")) {
-            return backwardsRule(from, to, piece) && singleMoveRule(from, to, piece);
+    public boolean pawnRules(String from, String to, String pieceFrom, String pieceTo){
+        if (pieceFrom.substring(1).equals("P")) {
+            return backwardsRule(from, to, pieceFrom) && singleMoveRule(from, to, pieceFrom) && dontEatWhenDirect(from, to, pieceTo);
         }
+        return true;
+    }
+
+    private boolean dontEatWhenDirect(String from, String to, String pieceTo) {
+
+        String tO = to.substring(0,1);
+        String fRom = from.substring(0,1);
+
+        if(pieceTo != null && tO.equals(fRom)){
+            return false;
+        }
+
         return true;
     }
 
