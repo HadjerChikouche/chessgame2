@@ -7,7 +7,8 @@ public class Main {
     public static void main(String[] args) {
 
         PieceSquare[] board = initiliseBoard();
-        moove();
+        displayBoard(board);
+        move();
     }
 
 
@@ -87,19 +88,15 @@ public class Main {
 
     private static void displayBoard(PieceSquare[] board) {
 
-        System.out.print("   a "+"  b "+"  c "+"  d "+"  e "+"  f "+"  g "+"  h ");
+        System.out.print("   a " + "  b " + "  c " + "  d " + "  e " + "  f " + "  g " + "  h ");
 
         int k = 0;
         for (int i=0 ; i < 64; i++) {
-
             k=+k;
             if (i%8 == 0) {
                 System.out.println();
                 k++;
-
                 System.out.print(k+" ");
-
-
             }
             PieceSquare pieceSquare = board[i];
 
@@ -111,32 +108,50 @@ public class Main {
         }
     }
 
-    private static void moove(){
+    private static void move(){
         Scanner in = new Scanner(System.in);
         PieceSquare[] board = initiliseBoard();
-
-        while (true) {
-
+        MoteurDeRegles moteurDeRegles;
+        while(true){
             System.out.println();
             System.out.println(" Please Enter the position of the piece that you want to play : ");
             String from = in.nextLine();
             System.out.println("Please enter the position you want it to be in ");
             String to = in.nextLine();
 
-            String piece = null;
-            for (int i = 0; i < 64; i++) {
-                if (board[i].getSquare().equals(from)) {
-                    piece = board[i].getPiece();
-                    board[i].setPiece(null);
-                }
+            moteurDeRegles = new MoteurDeRegles();
+            String piece = getPieceByPosition(from, board);
+            if (moteurDeRegles.pawnRules(from, to, piece) == false){
+                System.out.println("this move is not possible try something else");
+                displayBoard(board);
+            }else{
+                move(board, from, to);
+                displayBoard(board);
             }
-
-            for (int i = 0; i < 64; i++) {
-                if (board[i].getSquare().equals(to)) {
-                    board[i].setPiece(piece);
-                }
-            }
-            displayBoard(board);
         }
+    }
+
+    private static void move(PieceSquare[] board, String from, String to) {
+        String piece = null;
+        for (int i = 0; i < 64; i++) {
+            if (board[i].getSquare().equals(from)) {
+                piece = board[i].getPiece();
+                board[i].setPiece(null);
+            }
+        }
+        for (int i = 0; i < 64; i++) {
+            if (board[i].getSquare().equals(to)) {
+                board[i].setPiece(piece);
+            }
+        }
+    }
+
+    private static String getPieceByPosition(String from, PieceSquare[] board) {
+        for (PieceSquare pieceSquare : board) {
+            if(from.equals(pieceSquare.getSquare())){
+                return pieceSquare.getPiece();
+            }
+        }
+        return null;
     }
 }
